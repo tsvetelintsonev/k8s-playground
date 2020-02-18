@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicea
+  namespace: k8s-playground
+  labels:
+    app: servicea
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: servicea
+  template:
+    metadata:
+      labels:
+        app: servicea
+    spec:
+      containers:
+        - name: servicea
+          image: k8s-playground_servicea:k8s
+          ports:
+          - containerPort: 80
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicea
+  namespace: k8s-playground
+spec:
+  type: ClusterIP
+  selector:
+    app: servicea
+  ports:
+    - protocol: TCP
+      port: 6001
+      targetPort: 80
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: servicea
+  namespace: k8s-playground
+spec:
+  hosts:
+    - servicea.k8s-playground.svc.cluster.local
+  http:
+  - match:
+    -port: 6001
+    route:
+      - destination:
+        host: servicea.k8s-playground.svc.cluster.local
+        port:
+          number: 6001

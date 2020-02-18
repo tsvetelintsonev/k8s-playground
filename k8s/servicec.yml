@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicec
+  namespace: k8s-playground
+  labels:
+    app: servicec
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: servicec
+  template:
+    metadata:
+      labels:
+        app: servicec
+    spec:
+      containers:
+        - name: servicec
+          image: k8s-playground_servicec:k8s
+          ports:
+          - containerPort: 80
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicec
+  namespace: k8s-playground
+spec:
+  type: ClusterIP
+  selector:
+    app: servicec
+  ports:
+    - protocol: TCP
+      port: 6003
+      targetPort: 80
+  
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: servicec
+  namespace: k8s-playground
+spec:
+  hosts:
+    - servicec.k8s-playground.svc.cluster.local
+  http:
+  - match:
+    -port: 6003
+    route:
+      - destination:
+        host: servicec.k8s-playground.svc.cluster.local
+        port:
+          number: 6003

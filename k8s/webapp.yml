@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  namespace: k8s-playground
+  labels:
+    app: webapp
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: k8s-playground_webapp:k8s
+          ports:
+          - containerPort: 80
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+  namespace: k8s-playground
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 6000
+      targetPort: 80
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: webapp
+  namespace: k8s-playground
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http-webapp
+      protocol: HTTP
+    hosts:
+    - k8s-playground.localhost
+  
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webapp
+  namespace: k8s-playground
+spec:
+  hosts:
+  - webapp.k8s-playground.svc.cluster.local
+  gateways: 
+  - webapp
+  http:
+  - match:
+    - port: 80
+    route:
+      - destination:
+        host: webapp.k8s-playground.svc.cluster.local
+        port:
+          number: 6000
