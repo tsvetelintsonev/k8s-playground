@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nemstore-productscatalog
+  namespace: nemstore-staging
+  labels:
+    app.kubernetes.io/name: nemstore-productscatalog
+    app.kubernetes.io/instance: "build-number"
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: nemstore
+    app.kubernetes.io/managed-by: kubectl
+spec: 
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nemstore-productscatalog
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nemstore-productscatalog
+    spec:
+      containers:
+        - name: nemstore-productscatalog
+          image: nemstore-productscatalog:1.0.0
+          env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Staging"
+          ports:
+          - containerPort: 80
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nemstore-productscatalog
+  namespace: nemstore-staging
+  labels:
+    app.kubernetes.io/name: nemstore-productscatalog
+    app.kubernetes.io/instance: "build-number"
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: nemstore
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: nemstore-productscatalog
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
