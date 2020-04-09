@@ -47,9 +47,9 @@ spec:
     - servicec.k8s-playground.svc.cluster.local
   http:
   - match:
-    -port: 6003
+    - port: 6003
     route:
-      - destination:
+    - destination:
         host: servicec.k8s-playground.svc.cluster.local
         port:
           number: 6003

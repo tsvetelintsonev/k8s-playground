@@ -61,14 +61,14 @@ metadata:
   namespace: k8s-playground
 spec:
   hosts:
-  - webapp.k8s-playground.svc.cluster.local
+  - k8s-playground.localhost
   gateways: 
   - webapp
   http:
   - match:
     - port: 80
     route:
-      - destination:
+    - destination:
         host: webapp.k8s-playground.svc.cluster.local
         port:
           number: 6000

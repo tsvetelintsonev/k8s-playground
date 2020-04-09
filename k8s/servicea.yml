@@ -47,9 +47,9 @@ spec:
     - servicea.k8s-playground.svc.cluster.local
   http:
   - match:
-    -port: 6001
+    - port: 6001
     route:
-      - destination:
+    - destination:
         host: servicea.k8s-playground.svc.cluster.local
         port:
           number: 6001

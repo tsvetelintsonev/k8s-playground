@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nemstore-frontend
+  namespace: nemstore
+  labels:
+    app: nemstore-frontend
+spec: 
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: nemstore-frontend
+  template:
+    metadata:
+      labels:
+        app: nemstore-frontend
+    spec:
+      containers:
+        - name: nemstore-frontend
+          image: nemstore-frontend:1.0.0
+          ports:
+          - containerPort: 80
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nemstore-frontend
+  namespace: nemstore
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: nemstore-frontend
+      prefix: /nemstore
+      service: nemstore-frontend.nemstore.svc.cluster.local:80
+spec:
+  type: ClusterIP
+  selector:
+    app: nemstore-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
