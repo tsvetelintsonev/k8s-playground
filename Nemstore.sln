@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nemstore.ProductsCatalog.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nemstore.Bff", "web\backend\NemStore.Bff\Nemstore.Bff.csproj", "{84CEBBA9-B6EE-49EA-99B6-FA44BA67AC6A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nemstore.Orders.Api", "services\Nemstore.Orders.Api\Nemstore.Orders.Api.csproj", "{15B047D6-23B9-4012-AA0E-1A7F5DC58EC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{84CEBBA9-B6EE-49EA-99B6-FA44BA67AC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84CEBBA9-B6EE-49EA-99B6-FA44BA67AC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84CEBBA9-B6EE-49EA-99B6-FA44BA67AC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B047D6-23B9-4012-AA0E-1A7F5DC58EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B047D6-23B9-4012-AA0E-1A7F5DC58EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B047D6-23B9-4012-AA0E-1A7F5DC58EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B047D6-23B9-4012-AA0E-1A7F5DC58EC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0DD56997-725B-4F74-9C8E-01FB4397CEA4} = {BB8C5FE4-6A47-4A68-A87C-CE56119F33C4}
+		{15B047D6-23B9-4012-AA0E-1A7F5DC58EC4} = {BB8C5FE4-6A47-4A68-A87C-CE56119F33C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F43F426-E7E6-4CDA-9116-97766EFEBDA6}

@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Nemstore.Bff.Middleware;
 
-namespace NemStore.Api
+namespace Nemstore.Orders.Api
 {
     public class Startup
     {
@@ -21,9 +20,6 @@ namespace NemStore.Api
         {
             services.AddControllers();
             services.AddApiVersioning();
-
-            services.AddTransient<CorsMiddelware>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,11 +30,12 @@ namespace NemStore.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMiddleware<CorsMiddelware>();
-
             app.UseHttpsRedirection();
+
             app.UseRouting();
+
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
