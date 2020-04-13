@@ -21,6 +21,17 @@ namespace Nemstore.Bff.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet(Name = "GetAllOrders")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            var productsCatalogUrl = _configuration.GetValue<string>(ORDERS_URL_SETTING_KEY).Trim('/');
+            var url = $"http://{productsCatalogUrl}/api/v1.0/orders";
+            var httpClient = new HttpClient();
+            var orders = await httpClient.GetStringAsync(url);
+
+            return Ok(orders);
+        }
+
         [HttpPost(Name = "CreateOrder")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
         {
