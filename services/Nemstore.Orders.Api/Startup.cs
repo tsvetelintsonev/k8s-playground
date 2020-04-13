@@ -18,8 +18,9 @@ namespace Nemstore.Orders.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(config => config.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
             services.AddApiVersioning();
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
