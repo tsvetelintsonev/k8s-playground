@@ -60,6 +60,8 @@ namespace Nemstore.Orders.Api.Controllers
                     {
                         Id = Guid.NewGuid(),
                         ProductId = product.Id,
+                        ProductName = product.Name,
+                        ProductImageUrl = product.ImageUrl,
                         UnitPrice = unitPrice,
                         OrderId = order.Id,
                         Quantity = line.Quantity,
