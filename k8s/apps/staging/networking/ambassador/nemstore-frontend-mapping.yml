@@ -1,0 +1,9 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: nemstore-frontend
+  namespace: nemstore-staging
+spec:
+  host: nemstore.staging.localhost
+  prefix: /
+  service: nemstore-frontend.nemstore-staging.svc.cluster.local:80

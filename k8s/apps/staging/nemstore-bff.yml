@@ -45,15 +45,6 @@ metadata:
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: nemstore
     app.kubernetes.io/managed-by: kubectl
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind: Mapping
-      name: nemstore-bff
-      host: nemstore.bff.staging.localhost
-      prefix: /
-      service: nemstore-bff.nemstore-staging.svc.cluster.local:80
 spec:
   type: ClusterIP
   selector:

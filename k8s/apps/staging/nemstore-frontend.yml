@@ -26,8 +26,20 @@ spec:
         - name: nemstore-frontend
           image: nemstore-frontend:1.0.0
           env:
-          - name: environment
+          - name: PodName
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: PodNamespace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: Environment
             value: "Staging"
+          - name: "BffUrl"
+            value: "nemstore.bff.staging.localhost"
+          command: ["/bin/sh"]
+          args: ["-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
           ports:
           - containerPort: 80
               
@@ -44,15 +56,6 @@ metadata:
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: nemstore
     app.kubernetes.io/managed-by: kubectl
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind: Mapping
-      name: nemstore-frontend
-      host: nemstore.staging.localhost
-      prefix: /
-      service: nemstore-frontend.nemstore-staging.svc.cluster.local:80
 spec:
   type: ClusterIP
   selector:
