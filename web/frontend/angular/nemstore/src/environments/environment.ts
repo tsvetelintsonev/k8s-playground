@@ -1,9 +1,10 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
-  production: false
+	production: false,
+	Environment: window['env']['Environment'],
+	PodName: window['env']['PodName'],
+	PodNamespace: window['env']['PodNamespace'],
+  BffUrl: window['env']['BffUrl'],
+  GetProductsUrl: `${window['env']['BffUrl']}api/v1.0/products`
 };
 
 /*

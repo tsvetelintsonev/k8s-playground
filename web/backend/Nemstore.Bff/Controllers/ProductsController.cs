@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace NemStore.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}")]
+    [Route("api/v{version:apiVersion}/products")]
     [ApiVersion("1.0")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private const string PRODUCTSCATALOG_URL_SETTING_KEY = "productsCatalogUrl";
 
-        public HomeController(IConfiguration configuration)
+        public ProductsController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -24,7 +24,7 @@ namespace NemStore.Api.Controllers
             try
             {
                 var productsCatalogUrl = _configuration.GetValue<string>(PRODUCTSCATALOG_URL_SETTING_KEY).Trim('/');
-                var url = $"http://{productsCatalogUrl}/api/v1.0";
+                var url = $"http://{productsCatalogUrl}/api/v1.0/products";
                 var httpClient = new HttpClient();
                 var products = await httpClient.GetStringAsync(url);
 

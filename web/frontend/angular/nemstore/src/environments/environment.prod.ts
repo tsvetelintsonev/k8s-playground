@@ -1,3 +1,8 @@
 export const environment = {
-  production: true
+  production: false,
+  Environment: window['env']['Environment'],
+  PodName: window['env']['PodName'],
+  PodNamespace: window['env']['PodNamespace'],
+  BffUrl: window['env']['BffUrl'],
+  GetProductsUrl: `${window['env']['BffUrl']}api/v1.0/products`
 };

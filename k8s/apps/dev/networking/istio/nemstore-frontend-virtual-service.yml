@@ -1,0 +1,26 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nemtstore-frontend
+  namespace: nemstore-dev
+  labels:
+    app.kubernetes.io/name: nemstore-frontend
+    app.kubernetes.io/instance: "build-number"
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: nemstore
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  hosts:
+  - nemstore.dev.localhost
+  gateways: 
+  - nemstore/nemstore-gateway
+  http:
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: nemstore-frontend.nemstore-dev.svc.cluster.local
+        port:
+            number: 80
