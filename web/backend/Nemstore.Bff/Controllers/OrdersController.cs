@@ -14,22 +14,11 @@ namespace Nemstore.Bff.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private const string ORDERS_URL_SETTING_KEY = "ordersUrl";
+        private const string ORDERS_URL_SETTING_KEY = "ordersApiUrl";
 
         public OrdersController(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-
-        [HttpGet(Name = "GetAllOrders")]
-        public async Task<IActionResult> GetAllOrders()
-        {
-            var productsCatalogUrl = _configuration.GetValue<string>(ORDERS_URL_SETTING_KEY).Trim('/');
-            var url = $"http://{productsCatalogUrl}/api/v1.0/orders";
-            var httpClient = new HttpClient();
-            var orders = await httpClient.GetStringAsync(url);
-
-            return Ok(orders);
         }
 
         [HttpPost(Name = "CreateOrder")]

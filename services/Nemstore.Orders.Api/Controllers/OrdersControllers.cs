@@ -49,6 +49,7 @@ namespace Nemstore.Orders.Api.Controllers
 
                 var order = new Order();
                 order.Id = Guid.NewGuid();
+                order.CreatedAt = DateTimeOffset.UtcNow;
                 order.Status = OrderStatus.AwaitingStockApproval;
                 order.Lines = new List<OrderLine>();
 
@@ -65,8 +66,7 @@ namespace Nemstore.Orders.Api.Controllers
                         ProductImageUrl = product.ImageUrl,
                         UnitPrice = unitPrice,
                         OrderId = order.Id,
-                        Quantity = line.Quantity,
-                        TotalPrice = unitPrice * line.Quantity
+                        Quantity = line.Quantity
                     };
 
                     order.Lines.Add(orderLine);

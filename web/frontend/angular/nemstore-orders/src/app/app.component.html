@@ -1,0 +1,93 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+.row.row-grid [class*="col-"] + [class*="col-"] {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 1200px) {
+    .row.row-grid [class*="col-lg-"] + [class*="col-lg-"] {
+        margin-top: 0;
+    }
+}
+@media (min-width: 992px) {
+    .row.row-grid [class*="col-md-"] + [class*="col-md-"] {
+        margin-top: 0;
+    }
+}
+@media (min-width: 768px) {
+    .row.row-grid [class*="col-sm-"] + [class*="col-sm-"] {
+        margin-top: 0;
+    }
+}
+</style>
+
+<div class="container" style="text-align: center;">
+  <div class="row">
+    <div class="col-sm">
+      <span style="margin-right: 8px;" class="badge badge-primary">Environment: {{ environment.Environment }}</span>
+      <span style="margin-right: 8px;" class="badge badge-primary">PodName: {{ environment.PodName }}</span>
+      <span style="margin-right: 8px;" class="badge badge-primary">PodNamespace: {{ environment.PodNamespace }}</span>
+      </div>
+  </div>
+  <div class="row row-grid mt-5">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of orders">
+            <tr>
+                <th scope="row">#{{ order.id }}</th>
+                <td>{{ formatDate(order) }}</td>
+                <td>{{ getStatusAsString(order) }}</td>
+                <td><button class="btn btn-primary" (click)="showOrderSummary(order)">View</button></td>
+            <tr>
+            <tr *ngIf="order.showOrderSummary">
+                <td colspan="4">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Product name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let orderLine of order.lines">
+                            <th scope="row"><img src="{{ orderLine.productImageUrl }}" style="width: 200px;"></th>
+                            <td>{{ orderLine.productName }}</td>
+                            <td>{{ orderLine.quantity }}</td>
+                            <td>${{ orderLine.totalPrice }}</td>
+                          </tr>
+                        </tbody>
+                        <tfoot style="text-align: right;">
+                            <tr>
+                                <th colspan="4">
+                                    <b>Order total: ${{order.total}}</b>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+  </div>
+</div>
+<router-outlet></router-outlet>

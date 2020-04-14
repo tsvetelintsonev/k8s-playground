@@ -11,7 +11,7 @@ namespace NemStore.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private const string PRODUCTSCATALOG_URL_SETTING_KEY = "productsCatalogUrl";
+        private const string PRODUCTSCATALOG_URL_SETTING_KEY = "productsCatalogApiUrl";
 
         public ProductsController(IConfiguration configuration)
         {
@@ -23,8 +23,8 @@ namespace NemStore.Api.Controllers
         {
             try
             {
-                var productsCatalogUrl = _configuration.GetValue<string>(PRODUCTSCATALOG_URL_SETTING_KEY).Trim('/');
-                var url = $"http://{productsCatalogUrl}/api/v1.0/products";
+                var productsCatalogApiUrl = _configuration.GetValue<string>(PRODUCTSCATALOG_URL_SETTING_KEY).Trim('/');
+                var url = $"http://{productsCatalogApiUrl}/api/v1.0/products";
                 var httpClient = new HttpClient();
                 var products = await httpClient.GetStringAsync(url);
 

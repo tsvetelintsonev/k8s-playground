@@ -26,8 +26,10 @@ spec:
           env:
           - name: ASPNETCORE_ENVIRONMENT
             value: "Staging"
-          - name: "productsCatalogUrl"
+          - name: "productsCatalogApiUrl"
             value: "nemstore-productscatalog.nemstore-staging.svc.cluster.local:80"
+          - name: "ordersApiUrl"
+            value: "nemstore-orders.nemstore-staging.svc.cluster.local:80"
           ports:
           - containerPort: 80
 
