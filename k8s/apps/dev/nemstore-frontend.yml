@@ -37,7 +37,7 @@ spec:
           - name: Environment
             value: "Development"
           - name: "BffUrl"
-            value: "nemstore.bff.dev.localhost"
+            value: "http://nemstore.bff.dev.localhost"
           command: ["/bin/sh"]
           args: ["-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
           ports:

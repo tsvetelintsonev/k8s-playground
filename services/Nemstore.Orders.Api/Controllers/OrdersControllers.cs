@@ -18,7 +18,7 @@ namespace Nemstore.Orders.Api.Controllers
     {
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _configuration;
-        private const string PRODUCTSCATALOG_URL_SETTING_KEY = "productsCatalogUrl";
+        private const string PRODUCTSCATALOG_API_URL_SETTING_KEY = "productsCatalogApiUrl";
         private const string ORDERS_CACHE_KEY = "orders";
 
         public OrdersControllers(IConfiguration configuration, IMemoryCache cache)
@@ -38,8 +38,8 @@ namespace Nemstore.Orders.Api.Controllers
         {
             try
             {
-                var productsCatalogUrl = _configuration.GetValue<string>(PRODUCTSCATALOG_URL_SETTING_KEY).Trim('/');
-                var url = $"http://{productsCatalogUrl}/api/v1.0/products";
+                var productsCatalogApiUrl = _configuration.GetValue<string>(PRODUCTSCATALOG_API_URL_SETTING_KEY).Trim('/');
+                var url = $"http://{productsCatalogApiUrl}/api/v1.0/products";
                 var httpClient = new HttpClient();
                 var products = JsonSerializer.Deserialize<IEnumerable<Product>>(await httpClient.GetStringAsync(url),
                     new JsonSerializerOptions

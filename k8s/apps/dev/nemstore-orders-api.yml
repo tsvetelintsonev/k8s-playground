@@ -28,6 +28,8 @@ spec:
           env:
           - name: ASPNETCORE_ENVIRONMENT
             value: "Development"
+          - name: "productsCatalogApiUrl"
+            value: "nemstore-productscatalog.nemstore-dev.svc.cluster.local:80"
           ports:
           - containerPort: 80
               

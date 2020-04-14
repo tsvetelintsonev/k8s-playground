@@ -14,7 +14,7 @@ namespace Nemstore.Bff.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private const string ORDERS_URL_SETTING_KEY = "ordersApiUrl";
+        private const string ORDERS_API_URL_SETTING_KEY = "ordersApiUrl";
 
         public OrdersController(IConfiguration configuration)
         {
@@ -26,8 +26,8 @@ namespace Nemstore.Bff.Controllers
         {
             try
             {
-                var productsCatalogUrl = _configuration.GetValue<string>(ORDERS_URL_SETTING_KEY).Trim('/');
-                var url = $"http://{productsCatalogUrl}/api/v1.0/orders";
+                var orderApiUrl = _configuration.GetValue<string>(ORDERS_API_URL_SETTING_KEY).Trim('/');
+                var url = $"http://{orderApiUrl}/api/v1.0/orders";
                 var httpClient = new HttpClient();
                 var response = await httpClient.PostAsync(url, new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json"));
 
