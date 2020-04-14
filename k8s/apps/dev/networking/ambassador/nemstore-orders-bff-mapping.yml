@@ -1,0 +1,9 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: nemstore-orders-bff
+  namespace: nemstore-dev
+spec:
+  host: nemstore.orders.bff.dev.localhost
+  prefix: /
+  service: nemstore-orders-bff.nemstore-dev.svc.cluster.local:80

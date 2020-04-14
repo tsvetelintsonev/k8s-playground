@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nemstore-orders-frontend
+  namespace: nemstore-dev
+  labels:
+    app.kubernetes.io/name: nemstore-orders-frontend
+    app.kubernetes.io/instance: "build-number"
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: nemstore
+    app.kubernetes.io/managed-by: kubectl
+spec: 
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nemstore-orders-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nemstore-orders-frontend
+    spec:
+      containers:
+        - name: nemstore-orders-frontend
+          image: nemstore-orders-frontend:1.0.0
+          env:
+          - name: PodName
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: PodNamespace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: Environment
+            value: "Development"
+          - name: "BffUrl"
+            value: "nemstore.orders.bff.dev.localhost"
+          command: ["/bin/sh"]
+          args: ["-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+          ports:
+          - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nemstore-orders-frontend
+  namespace: nemstore-dev
+  labels:
+    app.kubernetes.io/name: nemstore-orders-frontend
+    app.kubernetes.io/instance: "build-number"
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: nemstore
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: nemstore-orders-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
