@@ -6,7 +6,13 @@ import { Injectable } from '@angular/core';
 export class HttpRequestInterceptor implements HttpInterceptor {
 
 	public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const newRequest = req.clone({ headers: req.headers.append('Access-Control-Allow-Origin', '*') })
+    const newRequest = req.clone(
+      {
+        headers: req.headers
+          .set('Access-Control-Allow-Origin', '*')
+          .set('Content-Type', 'application/json')
+      });
+
     return next.handle(newRequest);
 	}
 }

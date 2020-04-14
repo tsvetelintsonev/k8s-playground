@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from './models/Product';
+import { CreateOrderRequest, CreateOrderRequestLine } from './models/CreateOrderRequest';
 
 @Component({
 	selector: 'app-root',
@@ -10,17 +11,30 @@ import { Product } from './models/Product';
 })
 export class AppComponent implements OnInit {
 
-    title = 'nemstore';
-    environment = environment;
+	title = 'nemstore';
+	environment = environment;
 	products: Array<Product> = [];
 
-  	constructor(private httpClient: HttpClient) {}
+	constructor(private httpClient: HttpClient) { }
 
 	ngOnInit(): void {
+		this.httpClient.get<Product[]>(environment.GetProductsUrl)
+			.subscribe(
+				products => this.products = products,
+				error => console.log(error));
+	}
 
-    this.httpClient.get<Product[]>(environment.GetProductsUrl)
-		.subscribe(
-			products => this.products = products,
-        	error => console.log(error));
+	public buy(product: Product, quantity: number): void {
+    var request = new CreateOrderRequest();
+    var line = new CreateOrderRequestLine();
+    line.productId = product.id;
+    line.quantity = quantity;
+    request.lines = new Array<CreateOrderRequestLine>();
+    request.lines.push(line);
+
+    this.httpClient.post(environment.CreateOrderUrl, JSON.stringify(request))
+			.subscribe(
+        response => console.log(response),
+				error => console.log(error));
 	}
 }

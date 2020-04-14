@@ -42,7 +42,7 @@ namespace Nemstore.Bff.Controllers
                 var httpClient = new HttpClient();
                 var response = await httpClient.PostAsync(url, new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json"));
 
-                return Ok();
+                return Ok(await response.Content.ReadAsStringAsync());
             }
             catch (System.Exception ex)
             {

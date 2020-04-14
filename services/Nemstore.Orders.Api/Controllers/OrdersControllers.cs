@@ -49,12 +49,13 @@ namespace Nemstore.Orders.Api.Controllers
 
                 var order = new Order();
                 order.Id = Guid.NewGuid();
+                order.Status = OrderStatus.AwaitingStockApproval;
                 order.Lines = new List<OrderLine>();
 
                 foreach (var line in request.Lines)
                 {
                     var product = products.Single(x => x.Id == line.ProductId);
-                    var unitPrice = Convert.ToDecimal(((string)product.Price).Substring(1));
+                    var unitPrice = Convert.ToDecimal(product.Price.Substring(1));
 
                     var orderLine = new OrderLine
                     {

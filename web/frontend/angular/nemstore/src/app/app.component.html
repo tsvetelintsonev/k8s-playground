@@ -43,7 +43,7 @@
         <img class="card-img-top" src="{{ product.imageUrl }}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">{{ product.name }} - {{ product.price }}</h5>
-          <a href="#" class="btn btn-primary">Buy</a>
+          <button class="btn btn-primary" (click)="buy(product, 1)">Buy</button>
         </div>
       </div>
     </div>

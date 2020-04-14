@@ -9,7 +9,7 @@ namespace Nemstore.Bff.Middleware
         public Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            context.Response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Content-Type");
 
             if (context.Request.Method == HttpMethod.Options.Method)
             {
