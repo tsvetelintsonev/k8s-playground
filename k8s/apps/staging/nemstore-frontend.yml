@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: nemstore-frontend
-          image: nemstore-frontend:1.0.0
+          image: nemstore-frontend:1.1.0
           env:
           - name: PodName
             valueFrom:
