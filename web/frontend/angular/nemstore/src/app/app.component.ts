@@ -3,6 +3,7 @@ import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from './models/Product';
 import { CreateOrderRequest, CreateOrderRequestLine } from './models/CreateOrderRequest';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
 	environment = environment;
 	products: Array<Product> = [];
 
-	constructor(private httpClient: HttpClient) { }
+	constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
 	ngOnInit(): void {
 		this.httpClient.get<Product[]>(environment.GetProductsUrl)
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
 
     this.httpClient.post(environment.CreateOrderUrl, JSON.stringify(request))
 			.subscribe(
-        response => console.log(response),
+        response => { console.log(response); this.toastr.success('Thank you for your purchase! ')},
 				error => console.log(error));
 	}
 }
