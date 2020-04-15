@@ -24,11 +24,11 @@ export class AppComponent implements OnInit {
 				error => console.log(error));
 	}
 
-	public buy(product: Product, quantity: number): void {
+	public buy(product: Product): void {
     var request = new CreateOrderRequest();
     var line = new CreateOrderRequestLine();
     line.productId = product.id;
-    line.quantity = quantity;
+    line.quantity = product.quantity;
     request.lines = new Array<CreateOrderRequestLine>();
     request.lines.push(line);
 
@@ -36,5 +36,18 @@ export class AppComponent implements OnInit {
 			.subscribe(
         response => console.log(response),
 				error => console.log(error));
-	}
+  }
+
+  public incrementProductQuantity(product: Product): void {
+    product.quantity = (product.quantity || 1) + 1;
+    console.log(product);
+  }
+
+  public decrementProductQuantity(product: Product): void {
+    if ((product.quantity || 1) == 1) {
+      return;
+    }
+
+    product.quantity = product.quantity - 1;
+  }
 }

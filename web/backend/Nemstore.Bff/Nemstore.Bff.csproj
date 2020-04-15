@@ -4,12 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>6326a87b-85ef-4a2c-b02a-45fe930b3451</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
   </ItemGroup>
 
 </Project>
